@@ -9,5 +9,6 @@ public class Main {
         TimetableBot.build();
         TimetableBot.addListener(new TestListener());
         TimetableBot.run();
+        TimetableBot.loadMembers();
     }
 }
