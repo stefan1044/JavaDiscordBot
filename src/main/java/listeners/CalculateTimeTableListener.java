@@ -1,14 +1,8 @@
 package listeners;
 
-import codeGenerators.Code;
-import net.dv8tion.jda.api.entities.Member;
+import functionalities.TimeTable_SA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import preferences.Preference;
-import timetableBot.TimetableBot;
-
-import java.util.List;
-import java.util.Map;
 
 public class CalculateTimeTableListener extends ListenerAdapter {
     
@@ -17,8 +11,11 @@ public class CalculateTimeTableListener extends ListenerAdapter {
         if (!event.getName().equals("calculatetimetable")){
             return;
         }
-        Map<Code, List<Preference>> preferenceMap = TimetableBot.getPreferenceMap();
-        System.out.println(preferenceMap);
-        event.reply("da").queue();
+//        Map<Code, List<Preference>> preferenceMap = TimetableBot.getPreferenceMap();
+//        System.out.println(preferenceMap);
+//        event.reply("da").queue();
+        String timetable = TimeTable_SA.run();
+        event.deferReply().queue();
+        event.getHook().sendMessage(timetable).setEphemeral(true).queue();
     }
 }

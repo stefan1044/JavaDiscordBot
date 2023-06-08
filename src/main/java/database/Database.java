@@ -1,6 +1,7 @@
 package database;
 
 import codeGenerators.Code;
+import preferences.Preference;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -157,7 +158,7 @@ public class Database {
     public static void insertStudentPreference(int idStudent, int idSubject, int idTimeslot) {
         try {
             Connection con = Database.getConnection();
-            String sql = "INSERT INTO student_preferences (id_subject, id_timeslot, id_student)" +
+            String sql = "INSERT INTO student_preferences (id_subject, id_timeslot, id_student) " +
                     "VALUES(?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, idSubject);
@@ -256,6 +257,63 @@ public class Database {
             System.err.println(e);
         }
         return id;
+    }
+
+//    public static List<Preference> getStudentPreferences() {
+//        List<Preference> listPreference = new ArrayList<>();
+//    }
+    public static String getGroupNameFromId(int id) {
+        Connection con = Database.getConnection();
+        String sql = "SELECT name FROM groups WHERE id = ?";
+        String name = "";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet groupId = preparedStatement.executeQuery();
+            if (groupId.next())
+                name = groupId.getString("name");
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return name;
+    }
+
+    public static String getSubjectNameFromId(int id) {
+        Connection con = Database.getConnection();
+        String sql = "SELECT name FROM subjects WHERE id = ?";
+        String name = "";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet subjectId = preparedStatement.executeQuery();
+            if (subjectId.next())
+                name = subjectId.getString("name");
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return name;
+    }
+
+    public static String getClassNameFromId(int id) {
+        Connection con = Database.getConnection();
+        String sql = "SELECT name FROM classrooms WHERE id = ?";
+        String name = "";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet classId = preparedStatement.executeQuery();
+            if (classId.next())
+                name = classId.getString("name");
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return name;
     }
 }
 

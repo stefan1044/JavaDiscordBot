@@ -54,7 +54,7 @@ public class TimetableBot {
             jda.awaitReady();
             guild = jda.getGuilds().get(0);
             TimetableBot.addRoles();
-            TimetableBot.preferenceMap = PreferenceManager.getPreferences();
+//            TimetableBot.preferenceMap = Database.getPreferences();
             System.out.println(TimetableBot.preferenceMap);
         } catch (InterruptedException e){
             System.out.println("Bot was interrupted while building! Closing process");

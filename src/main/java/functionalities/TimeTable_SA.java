@@ -6,7 +6,6 @@ import database.StudentPreference;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -14,7 +13,7 @@ import java.util.*;
 import static java.lang.Math.exp;
 
 public class TimeTable_SA {
-    public static void main(String[] args) {
+    public static String run() {
 //        Connection con = Database.getConnection();
 //        String sql = "SELECT * FROM students";
 //        try {
@@ -63,20 +62,53 @@ public class TimeTable_SA {
 //
 //
         int[][] rez = simulated_annealing(0.995, nrClassroom, nrTimeSlots, lectures, studentPreferences);
-        System.out.print("Clase:     ");
-        for (int i = 0; i < rez.length; i++) {
-            for (int j = 0; j < rez[0].length; j++)
-                System.out.print(rez[i][j] + " ");
-            System.out.println();
-            System.out.print("Intervale: ");
+//        System.out.print("Clase:     ");
+//        for (int i = 0; i < rez.length; i++) {
+//            for (int j = 0; j < rez[0].length; j++)
+//                System.out.print(rez[i][j] + " ");
+//            System.out.println();
+//            System.out.print("Intervale: ");
+//        }
+        return interpretResults(rez, lectures);
+    }
+
+    private static String interpretResults(int[][] rez, List<Lecture> lectures) {
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < rez[0].length; i++) {
+            int idGrupa = i / lectures.size() + 1;
+            int idMaterie = i + 1;
+            int idTimeSlot = rez[1][i];
+            int idClassroom = rez[0][i];
+
+            StringBuilder timeslot = new StringBuilder();
+            if ((idTimeSlot - 1) / 6 == 0)
+                timeslot.append("Monday");
+            else if ((idTimeSlot - 1) / 6 == 1)
+                timeslot.append("Tuesday");
+            else if ((idTimeSlot - 1) / 6 == 2)
+                timeslot.append("Wednesday");
+            else if ((idTimeSlot - 1) / 6 == 3)
+                timeslot.append("Thursday");
+            else if ((idTimeSlot - 1) / 6 == 4)
+                timeslot.append("Firday");
+            if (idTimeSlot != 6)
+                timeslot.append(idTimeSlot % 6);
+            else
+                timeslot.append("6");
+
+            String grupa = Database.getGroupNameFromId(idGrupa);
+            String materie = Database.getSubjectNameFromId(idMaterie);
+            String classroom = Database.getClassNameFromId(idClassroom);
+            message.append("Grupa: ").append(grupa).append(" Materia: ").append(materie).append(" Clasa: ").append(classroom).append("\n");
         }
+        return message.toString();
     }
 
     static int[][] generate(int nrLecture, int nrClassroom, int nrTimeSlots) {
         Random rand = new Random();
         int[] classrooms = new int[nrLecture];
         int[] timeSlots = new int[nrLecture];
-        int[][] assignment = new int[2][nrLecture];
+        int[][] assignment = new int[3][nrLecture];
         for (int i = 0; i < nrLecture; i++) {
             classrooms[i] = rand.nextInt(nrClassroom);
             timeSlots[i] = rand.nextInt(nrTimeSlots);
