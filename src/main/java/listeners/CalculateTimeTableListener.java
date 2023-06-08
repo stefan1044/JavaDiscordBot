@@ -1,5 +1,6 @@
 package listeners;
 
+import codeGenerators.Code;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -16,7 +17,7 @@ public class CalculateTimeTableListener extends ListenerAdapter {
         if (!event.getName().equals("calculatetimetable")){
             return;
         }
-        Map<Member, List<Preference>> preferenceMap = TimetableBot.getPreferenceMap();
+        Map<Code, List<Preference>> preferenceMap = TimetableBot.getPreferenceMap();
         System.out.println(preferenceMap);
         event.reply("da").queue();
     }

@@ -2,6 +2,8 @@ package codeGenerators;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import database.Database;
+
 
 public class StaticCodesManager {
 
@@ -10,16 +12,16 @@ public class StaticCodesManager {
 
 
     // fa tu aici cu baza de date
-    private static void writeCodesToFile() {
-//        try (
-//                FileOutputStream fileOutputStream = new FileOutputStream(StaticCodesManager.pathToCodesFile, false);
-//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)
-//        ) {
-//            objectOutputStream.writeObject(StaticCodesManager.codes);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
+    public static void writeCodesToDatabase() {
+        for (Code code : codes) {
+            String firstName = code.getFirstname();
+            String lastName = code. getLastname();
+            String nrMatricol = code.getCode();
+            int idYear = code.getYear();
+            char groupLetter = code.getGroup();
+            int groupNumber = code.getGroupNumber();
+            Database.insertStudent(firstName, lastName, idYear, groupLetter, groupNumber, nrMatricol);
+        }
     }
 
     public static void addCodeToList(Code code) {
@@ -27,23 +29,11 @@ public class StaticCodesManager {
             StaticCodesManager.codes = new ArrayList<>();
         }
         StaticCodesManager.codes.add(code);
-        writeCodesToFile();
+//        writeCodesToDatabase();
     }
 
     public static void loadCodesList() {
-//        ArrayList<Code> codesList;
-//
-//        try (
-//                FileInputStream fileInputStream = new FileInputStream(StaticCodesManager.pathToCodesFile);
-//                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
-//        ) {
-//            codesList = (ArrayList<Code>) objectInputStream.readObject();
-//        } catch (IOException | ClassNotFoundException | ClassCastException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
-//
-//        StaticCodesManager.codes = codesList;
+        Database.getAllStudents();
     }
 
     public static ArrayList<Code> getCodes(){

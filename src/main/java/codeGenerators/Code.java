@@ -7,13 +7,10 @@ public class Code implements Serializable {
     private final String firstname;
     private final String lastname;
     private final int year;
-    
-    
-    
-    private final String group;
+    private final char group;
     private final int groupNumber;
 
-    Code(String code, String firstname, String lastname, int year, String group, int groupNumber){
+    public Code(String code, String firstname, String lastname, int year, char group, int groupNumber){
         this.code = code;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -21,8 +18,6 @@ public class Code implements Serializable {
         this.group = group;
         this.groupNumber = groupNumber;
     }
-
-    
 
     public String getCode() {
         return this.code;
@@ -40,7 +35,7 @@ public class Code implements Serializable {
         return year;
     }
     
-    public String getGroup() {
+    public char getGroup() {
         return group;
     }
     

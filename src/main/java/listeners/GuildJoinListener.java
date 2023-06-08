@@ -30,12 +30,12 @@ public class GuildJoinListener extends ListenerAdapter {
                 ,
                 new OptionData(OptionType.INTEGER, "starthour",
                         "The hour at which you would like to start", true)
-                        .addChoice("8AM", 8)
-                        .addChoice("10AM", 10)
-                        .addChoice("12AM", 12)
-                        .addChoice("2PM", 14)
-                        .addChoice("4PM", 16)
-                        .addChoice("6PM", 18)
+                        .addChoice("8AM", 1)
+                        .addChoice("10AM", 2)
+                        .addChoice("12AM", 3)
+                        .addChoice("2PM", 4)
+                        .addChoice("4PM", 5)
+                        .addChoice("6PM", 6)
                 )
         );
         commands.add(

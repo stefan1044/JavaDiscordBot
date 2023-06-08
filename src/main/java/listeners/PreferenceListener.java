@@ -1,5 +1,6 @@
 package listeners;
 
+import codeGenerators.StaticCodesManager;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -28,8 +29,8 @@ public class PreferenceListener extends ListenerAdapter {
         String validity = Preference.checkValidity(preference);
         if (validity.equals(Preference.IS_VALID)){
             Member member = event.getMember();
-            TimetableBot.getPreferenceMap().computeIfAbsent(member, k -> new ArrayList<>(0)).add(preference);
-            TimetableBot.writePreferenceMapToFile();
+            TimetableBot.getPreferenceMap().computeIfAbsent(StaticCodesManager.getCodes(), k -> new ArrayList<>(0)).add(preference);
+            TimetableBot.writePreferenceMapToDatabase();
         }
         
         event.reply(validity).setEphemeral(true).queue();

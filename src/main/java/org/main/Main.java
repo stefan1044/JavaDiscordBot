@@ -5,6 +5,7 @@ import codeGenerators.StaticCodesManager;
 import listeners.TestListener;
 import timetableBot.TimetableBot;
 
+import java.sql.SQLOutput;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -17,6 +18,7 @@ public class Main {
     private static void startBot(){
         System.out.println("Starting bot!");
         StaticCodesManager.loadCodesList();
+        System.out.println(StaticCodesManager.getCodes());
 
         TimetableBot.build();
         TimetableBot.addListener(new TestListener());
@@ -30,6 +32,7 @@ public class Main {
             var code = StaticCodeFactory.getRandomCode();
             StaticCodesManager.addCodeToList(code);
         });
+        StaticCodesManager.writeCodesToDatabase();
     }
     private static void addNewCodes(int count){
         System.out.println("Adding " + count + " new codes!");

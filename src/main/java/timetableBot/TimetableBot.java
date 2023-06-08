@@ -1,5 +1,7 @@
 package timetableBot;
 
+import codeGenerators.Code;
+import database.Database;
 import listeners.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -27,11 +29,11 @@ public class TimetableBot {
     private static List<Member> members;
     private static final String pathToPreferenceFile = ".\\src\\main\\resources\\preferenceMap";
     
-    public static Map<Member, List<Preference>> getPreferenceMap() {
+    public static Map<Code, List<Preference>> getPreferenceMap() {
         return preferenceMap;
     }
     
-    private static Map<Member, List<Preference>> preferenceMap = new HashMap<>(0);
+    private static Map<Code, List<Preference>> preferenceMap = new HashMap<>(0);
 
     public static void build() {
         var env = System.getenv();
@@ -82,17 +84,8 @@ public class TimetableBot {
     }
     
     //calin fa tu astea sa mearga
-    public static void writePreferenceMapToFile(){
-//        try (
-//                FileOutputStream fileOutputStream = new FileOutputStream(TimetableBot.pathToPreferenceFile, false);
-//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)
-//        ) {
-//            System.out.println(TimetableBot.preferenceMap);
-//            objectOutputStream.writeObject(TimetableBot.preferenceMap);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
+    public static void writePreferenceMapToDatabase(){
+        int studentId = Database.getIdFromNrMat(preferenceMap.)
     }
     private static void loadPreferenceMap(){
 //        Map<Member, List<Preference>> preferences;
