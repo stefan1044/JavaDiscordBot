@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import preferences.Preference;
 import preferences.PreferenceManager;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -38,6 +41,7 @@ public class PreferenceListener extends ListenerAdapter {
             String[] names = nickname.split(" ");
             Code studentCode;
             try {
+                System.out.println(new ArrayList<>(List.of(names)));
                 studentCode = StaticCodesManager.getCodes().stream().filter(
                         (code) -> code.getFirstname().equals(names[0]) && code.getLastname().equals(
                                 names[1])).findFirst().get();

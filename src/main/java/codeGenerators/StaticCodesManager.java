@@ -33,7 +33,7 @@ public class StaticCodesManager {
     }
 
     public static void loadCodesList() {
-        Database.getAllStudents();
+        StaticCodesManager.codes = new ArrayList<>(Database.getAllStudents());
     }
 
     public static ArrayList<Code> getCodes(){
