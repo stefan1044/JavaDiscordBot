@@ -1,6 +1,5 @@
 package codeGenerators;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -10,16 +9,17 @@ public class StaticCodesManager {
     private static ArrayList<Code> codes = null;
 
 
+    // fa tu aici cu baza de date
     private static void writeCodesToFile() {
-        try (
-                FileOutputStream fout = new FileOutputStream(StaticCodesManager.pathToCodesFile, false);
-                ObjectOutputStream oos = new ObjectOutputStream(fout)
-        ) {
-            oos.writeObject(StaticCodesManager.codes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+//        try (
+//                FileOutputStream fileOutputStream = new FileOutputStream(StaticCodesManager.pathToCodesFile, false);
+//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)
+//        ) {
+//            objectOutputStream.writeObject(StaticCodesManager.codes);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
     }
 
     public static void addCodeToList(Code code) {
@@ -31,19 +31,19 @@ public class StaticCodesManager {
     }
 
     public static void loadCodesList() {
-        ArrayList<Code> codesList;
-
-        try (
-                FileInputStream fin = new FileInputStream(StaticCodesManager.pathToCodesFile);
-                ObjectInputStream ois = new ObjectInputStream(fin)
-        ) {
-            codesList = (ArrayList<Code>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-        StaticCodesManager.codes = codesList;
+//        ArrayList<Code> codesList;
+//
+//        try (
+//                FileInputStream fileInputStream = new FileInputStream(StaticCodesManager.pathToCodesFile);
+//                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
+//        ) {
+//            codesList = (ArrayList<Code>) objectInputStream.readObject();
+//        } catch (IOException | ClassNotFoundException | ClassCastException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
+//
+//        StaticCodesManager.codes = codesList;
     }
 
     public static ArrayList<Code> getCodes(){

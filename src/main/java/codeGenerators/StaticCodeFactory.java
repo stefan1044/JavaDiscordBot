@@ -25,8 +25,10 @@ public class StaticCodeFactory {
         String firstname = StaticCodeFactory.faker.name().firstName();
         String lastname = StaticCodeFactory.faker.name().lastName();
         int year = StaticCodeFactory.faker.number().numberBetween(1, 4);
+        String group = StaticCodeFactory.faker.number().numberBetween(1, 3) == 1 ? "A" : "B";
+        int groupNumber = StaticCodeFactory.faker.number().numberBetween(1,7);
 
-        return new Code(newCode, firstname, lastname, year);
+        return new Code(newCode, firstname, lastname, year, group, groupNumber);
     }
 
 }

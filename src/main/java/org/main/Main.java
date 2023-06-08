@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
+        Main.generateNewCodes(15);
         Main.printCodes();
         Main.startBot();
     }
