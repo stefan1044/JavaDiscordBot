@@ -1,13 +1,13 @@
 package listeners;
 
+import codeGenerators.Code;
 import codeGenerators.StaticCodesManager;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import preferences.Preference;
-import timetableBot.TimetableBot;
+import preferences.PreferenceManager;
 
-import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 
@@ -28,9 +28,25 @@ public class PreferenceListener extends ListenerAdapter {
         Preference preference = new Preference(preferredClass, preferredDay, preferredStartHour);
         String validity = Preference.checkValidity(preference);
         if (validity.equals(Preference.IS_VALID)){
-            Member member = event.getMember();
-            TimetableBot.getPreferenceMap().computeIfAbsent(StaticCodesManager.getCodes(), k -> new ArrayList<>(0)).add(preference);
-            TimetableBot.writePreferenceMapToDatabase();
+            String nickname;
+            try{
+                nickname = Objects.requireNonNull(event.getMember()).getNickname();
+            }catch (NullPointerException e){
+                e.printStackTrace();
+                return;
+            }
+            String[] names = nickname.split(" ");
+            Code studentCode;
+            try {
+                studentCode = StaticCodesManager.getCodes().stream().filter(
+                        (code) -> code.getFirstname().equals(names[0]) && code.getLastname().equals(
+                                names[1])).findFirst().get();
+            }catch (NoSuchElementException e){
+                e.printStackTrace();
+                return;
+            }
+            
+            PreferenceManager.writePreferenceToDatabase(preference, studentCode);
         }
         
         event.reply(validity).setEphemeral(true).queue();

@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import preferences.Preference;
+import preferences.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,6 @@ public class TimetableBot {
     private static JDA jda;
     private static Guild guild;
     private static List<Member> members;
-    private static final String pathToPreferenceFile = ".\\src\\main\\resources\\preferenceMap";
     
     public static Map<Code, List<Preference>> getPreferenceMap() {
         return preferenceMap;
@@ -54,7 +54,7 @@ public class TimetableBot {
             jda.awaitReady();
             guild = jda.getGuilds().get(0);
             TimetableBot.addRoles();
-            TimetableBot.loadPreferenceMap();
+            TimetableBot.preferenceMap = PreferenceManager.getPreferences();
             System.out.println(TimetableBot.preferenceMap);
         } catch (InterruptedException e){
             System.out.println("Bot was interrupted while building! Closing process");
@@ -82,26 +82,7 @@ public class TimetableBot {
             throw new RuntimeException("Could not get roles!");
         }
     }
-    
-    //calin fa tu astea sa mearga
-    public static void writePreferenceMapToDatabase(){
-        int studentId = Database.getIdFromNrMat(preferenceMap.)
-    }
-    private static void loadPreferenceMap(){
-//        Map<Member, List<Preference>> preferences;
-//
-//        try (
-//                FileInputStream fileInputStream = new FileInputStream(TimetableBot.pathToPreferenceFile);
-//                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
-//        ) {
-//            preferences = (Map<Member, List<Preference>> ) objectInputStream.readObject();
-//        } catch (IOException | ClassNotFoundException | ClassCastException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
-//
-//        TimetableBot.preferenceMap = preferences;
-    }
+
     public static void addListener(ListenerAdapter listener){
         TimetableBot.jda.addEventListener(listener);
     }
