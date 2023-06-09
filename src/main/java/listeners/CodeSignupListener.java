@@ -38,15 +38,20 @@ public class CodeSignupListener extends ListenerAdapter {
             System.out.println("Received wrong code");
             return;
         }
+        System.out.println(code);
 
-        TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_FIRST_YEAR).queue();
-        TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_SECOND_YEAR).queue();
-        TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_THIRD_YEAR).queue();
         if (code.get().getYear() == 1){
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_SECOND_YEAR).queue();
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_THIRD_YEAR).queue();
             TimetableBot.getGuild().addRoleToMember(event.getAuthor(), TimetableBot.ROLE_FIRST_YEAR).queue();
         } else if(code.get().getYear() == 2){
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_FIRST_YEAR).queue();
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_THIRD_YEAR).queue();
             TimetableBot.getGuild().addRoleToMember(event.getAuthor(), TimetableBot.ROLE_SECOND_YEAR).queue();
+            System.out.println(TimetableBot.ROLE_SECOND_YEAR);
         } else{
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_FIRST_YEAR).queue();
+            TimetableBot.getGuild().removeRoleFromMember(event.getAuthor(), TimetableBot.ROLE_SECOND_YEAR).queue();
             TimetableBot.getGuild().addRoleToMember(event.getAuthor(), TimetableBot.ROLE_THIRD_YEAR).queue();
         }
 

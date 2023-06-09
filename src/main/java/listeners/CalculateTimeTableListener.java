@@ -14,8 +14,8 @@ public class CalculateTimeTableListener extends ListenerAdapter {
 //        Map<Code, List<Preference>> preferenceMap = TimetableBot.getPreferenceMap();
 //        System.out.println(preferenceMap);
 //        event.reply("da").queue();
-        String timetable = TimeTable_SA.run();
         event.deferReply().queue();
+        String timetable = TimeTable_SA.run();
         event.getHook().sendMessage(timetable).setEphemeral(true).queue();
     }
 }

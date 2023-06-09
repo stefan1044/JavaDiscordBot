@@ -91,15 +91,21 @@ public class TimeTable_SA {
                 timeslot.append("Thursday");
             else if ((idTimeSlot - 1) / 6 == 4)
                 timeslot.append("Firday");
-            if (idTimeSlot != 6)
-                timeslot.append(idTimeSlot % 6);
-            else
-                timeslot.append("6");
+            if (idTimeSlot != 6) {
+//                timeslot.append(idTimeSlot % 6);
+                int startHour = 8 + (((idTimeSlot - 1) % 6)) * 2;
+                int endHour = 8 + ((idTimeSlot - 1) % 6 + 1) * 2;
+                timeslot.append(" " + startHour + " - " + endHour);
+            }
+            else {
+                timeslot.append(" 18 - 20 ");
+            }
+//                timeslot.append("6");
 
             String grupa = Database.getGroupNameFromId(idGrupa);
             String materie = Database.getSubjectNameFromId(idMaterie);
             String classroom = Database.getClassNameFromId(idClassroom);
-            message.append("Grupa: ").append(grupa).append(" Materia: ").append(materie).append(" Clasa: ").append(classroom).append("\n");
+            message.append("Grupa: ").append(grupa).append(" Materia: ").append(materie).append(" Clasa: ").append(classroom).append(" Ora: " + timeslot).append("\n");
         }
         return message.toString();
     }
@@ -108,20 +114,34 @@ public class TimeTable_SA {
         Random rand = new Random();
         int[] classrooms = new int[nrLecture];
         int[] timeSlots = new int[nrLecture];
-        int[][] assignment = new int[3][nrLecture];
+        int[][] assignment = new int[2][nrLecture];
+//        System.out.println("nr lectures " + nrLecture);
         for (int i = 0; i < nrLecture; i++) {
+//            System.out.println("classroom este: " + nrClassroom + " timeslots este " + nrTimeSlots);
             classrooms[i] = rand.nextInt(nrClassroom);
             timeSlots[i] = rand.nextInt(nrTimeSlots);
+//            System.out.println(classrooms[i] + " " + timeSlots[i]);
         }
-        assignment[0] = classrooms;
-        assignment[1] = timeSlots;
+        assignment[0] = Arrays.copyOf(classrooms, classrooms.length);
+        assignment[1] = Arrays.copyOf(timeSlots, timeSlots.length);
+
+//        assignment[0] = classrooms;
+//        assignment[1] = timeSlots;
+//        System.out.println("HERE");
+//        for(var a: assignment){
+//            for(var b:a){
+//                System.out.println(b);
+//            }
+//        }
         return assignment;
     }
 
     static double fitness(int[][] assignment, List<Lecture> lectures, Map<Integer, List<StudentPreference>> studentPreference) {
         int fit = 0;
         for (int i = 0; i < lectures.size(); i++) {
-            for (StudentPreference pref : studentPreference.get(lectures.get(i).idGroup)) {
+            if (studentPreference == null || studentPreference.isEmpty())
+                break;
+            for (StudentPreference pref : studentPreference.getOrDefault(lectures.get(i).idGroup, Collections.emptyList())) {
                 if (pref.idSubject != lectures.get(i).idSubject)
                     continue;
                 if (pref.idTimeSlot != assignment[1][i])
@@ -143,12 +163,18 @@ public class TimeTable_SA {
     }
 
     static int[][] neighbour(int[][] assignment, int nrClassroom, int nrTimeSlots) {
+//        for(var mem: assignment){
+//            for (var mem2: mem){
+////                System.out.println(mem2);
+//            }
+//        }
         int[][] localAssignment = new int[assignment.length][assignment[0].length];
         for (int i = 0; i < assignment.length; i++)
             localAssignment[i] = Arrays.copyOf(assignment[i], assignment[0].length);
 
         for (int i = 0; i < 5; i++) {
             Random rand = new Random();
+//                System.out.println(localAssignment[0].length);
             int randomLecture = rand.nextInt(localAssignment[0].length);
             if (Math.random() < 0.5) {          //schimb o sala
                 int newClassroom = rand.nextInt(nrClassroom);

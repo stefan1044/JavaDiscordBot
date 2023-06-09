@@ -45,6 +45,7 @@ public class PreferenceListener extends ListenerAdapter {
                 studentCode = StaticCodesManager.getCodes().stream().filter(
                         (code) -> code.getFirstname().equals(names[0]) && code.getLastname().equals(
                                 names[1])).findFirst().get();
+                System.out.println(studentCode);
             }catch (NoSuchElementException e){
                 e.printStackTrace();
                 return;

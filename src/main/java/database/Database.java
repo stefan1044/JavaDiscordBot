@@ -168,6 +168,7 @@ public class Database {
             preparedStatement.executeUpdate();
             con.commit();
         } catch (SQLException e) {
+            e.printStackTrace();
             System.err.println(e);
         }
     }
@@ -250,10 +251,13 @@ public class Database {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, nrMatricol);
             ResultSet studentId = preparedStatement.executeQuery();
-            if (studentId.next())
-                id = studentId.getInt("nr_matricol");
+            System.out.println(nrMatricol);
+            if (studentId.next()) {
+                id = studentId.getInt("id");
+            }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             System.err.println(e);
         }
         return id;

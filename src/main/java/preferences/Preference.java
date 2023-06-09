@@ -88,7 +88,8 @@ public class Preference implements Serializable {
     }
 
     public int getTimeslotId() {
-        return 6 * (Preference.DAY_NAMES.indexOf(this.day) - 1) + this.startHour;
+        System.out.println(this);
+        return 6 * (Preference.DAY_NAMES.indexOf(this.day)) + this.startHour;
     }
     
     @Override
